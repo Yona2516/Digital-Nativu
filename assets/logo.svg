@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Digital Natives logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="24" fill="url(#g)"/>
+  <g fill="#ffffff">
+    <path d="M30 36h26c16 0 26 10 26 28s-10 28-26 28H30V36zm16 14v28h10c8 0 12-5 12-14s-4-14-12-14H46z"/>
+    <path d="M70 36h16l16 28-16 28H70l16-28-16-28z"/>
+  </g>
+</svg>
+
+

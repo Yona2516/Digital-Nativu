@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio — Digital Natives</title>
+    <meta name="description" content="Selected work and case studies from Digital Natives." />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="canonical" href="/portfolio.html" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html">
+          <img src="assets/logo.svg" alt="Digital Natives logo" />
+          <span>Digital Natives</span>
+        </a>
+        <nav>
+          <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" data-nav-toggle>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="nav-links" data-nav-links>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a class="active" aria-current="page" href="portfolio.html">Portfolio</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="surface">
+        <div class="container">
+          <div class="section-head">
+            <h2>Selected Work</h2>
+            <p>Examples of recent projects. More available upon request.</p>
+          </div>
+          <div class="grid grid-3">
+            <div class="card">
+              <h3>Retail Analytics Dashboard</h3>
+              <p class="muted">Real‑time sales, inventory insights, and anomaly detection for a retail client.</p>
+            </div>
+            <div class="card">
+              <h3>Healthcare Portal</h3>
+              <p class="muted">Accessible patient portal with secure messaging and appointment management.</p>
+            </div>
+            <div class="card">
+              <h3>Fintech Onboarding</h3>
+              <p class="muted">Streamlined KYC flows and integrations to improve conversion and compliance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="container center">
+          <div class="card">
+            <h3>Have a project in mind?</h3>
+            <p class="muted">We'd love to learn about it.</p>
+            <div class="cta-group" style="justify-content: center;">
+              <a class="btn btn-primary" href="contact.html">Let's Talk</a>
+              <a class="btn btn-outline" href="services.html">Our Services</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="brand" style="margin-bottom: 0.5rem">
+            <img src="assets/logo.svg" alt="Digital Natives logo" />
+            <span>Digital Natives</span>
+          </div>
+          <div class="muted">Building modern digital experiences.</div>
+        </div>
+        <div>
+          <strong>Company</strong>
+          <div class="list">
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a class="active" href="portfolio.html">Portfolio</a>
+          </div>
+        </div>
+        <div>
+          <strong>Get in touch</strong>
+          <div class="list">
+            <a href="mailto:digitalnativu@gmail.com">digitalnativu@gmail.com</a>
+            <a href="tel:+255793911469">+255 (793) 911-469</a>
+            <a href="https://wa.me/255684064292" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <div class="container muted" style="margin-top: 1rem">© <span id="year"></span> Digital Natives. All rights reserved.</div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  </body>
+  </html>
+
+
