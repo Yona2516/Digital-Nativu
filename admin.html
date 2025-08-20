@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin — Digital Natives</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html">
+          <img src="assets/logo.svg" alt="Digital Natives logo" />
+          <span>Digital Natives</span>
+        </a>
+        <nav>
+          <div class="nav-links" data-nav-links>
+            <a href="index.html">Home</a>
+            <a class="active" href="admin.html">Admin</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section>
+        <div class="container">
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Login</h3>
+              <form id="login-form">
+                <div class="field"><label>Email</label><input type="email" name="email" required/></div>
+                <div class="field"><label>Password</label><input type="password" name="password" required/></div>
+                <button class="btn btn-primary" type="submit">Login</button>
+                <div id="login-status" class="hint"></div>
+              </form>
+            </div>
+            <div class="card">
+              <h3>Upload File</h3>
+              <form id="upload-form">
+                <div class="field"><label>File</label><input type="file" name="file" required/></div>
+                <div class="field"><label>Category</label><input type="text" name="category" placeholder="service, portfolio, about-us"/></div>
+                <button class="btn btn-primary" type="submit">Upload</button>
+                <div id="upload-status" class="hint"></div>
+              </form>
+            </div>
+          </div>
+          <div class="card" style="margin-top:1rem;">
+            <h3>Pending Comments</h3>
+            <div id="comments"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      const API = (localStorage.getItem('apiBase') || '') || 'http://localhost:8787';
+      const loginForm = document.getElementById('login-form');
+      const loginStatus = document.getElementById('login-status');
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = new FormData(loginForm);
+        const email = form.get('email');
+        const password = form.get('password');
+        try {
+          const r = await fetch(API + '/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+          const j = await r.json();
+          if (!r.ok) throw new Error(j.error || 'Login failed');
+          localStorage.setItem('session', JSON.stringify(j.session || {}));
+          localStorage.setItem('access_token', (j.session && j.session.access_token) || '');
+          loginStatus.textContent = 'Logged in';
+          loadComments();
+        } catch (e2) {
+          loginStatus.textContent = e2.message;
+        }
+      });
+
+      const uploadForm = document.getElementById('upload-form');
+      uploadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData(uploadForm);
+        try {
+          const token = localStorage.getItem('access_token') || '';
+          const r = await fetch(API + '/files/upload', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token }, body: fd });
+          const j = await r.json();
+          document.getElementById('upload-status').textContent = r.ok ? 'Uploaded' : (j.error || 'Failed');
+        } catch (err) {
+          document.getElementById('upload-status').textContent = 'Network error';
+        }
+      });
+
+      async function loadComments() {
+        const el = document.getElementById('comments');
+        el.textContent = 'Loading…';
+        const token = localStorage.getItem('access_token') || '';
+        const r = await fetch(API + '/comments/all', { headers: { 'Authorization': 'Bearer ' + token }});
+        const j = await r.json();
+        if (!r.ok) { el.textContent = j.error || 'Failed'; return; }
+        el.innerHTML = '';
+        j.comments.filter(c => c.status !== 'approved').forEach(c => {
+          const div = document.createElement('div');
+          div.className = 'card';
+          div.style.marginBottom = '0.5rem';
+          div.innerHTML = `<div><strong>${c.name || 'Anonymous'}</strong> <span class="muted">${c.email || ''}</span></div><div>${c.comment_text}</div><div class="cta-group"><button class="btn btn-primary" data-act="approved" data-id="${c.id}">Approve</button><button class="btn btn-outline" data-act="rejected" data-id="${c.id}">Reject</button></div>`;
+          el.appendChild(div);
+        });
+        el.querySelectorAll('button[data-id]').forEach(btn => btn.addEventListener('click', async () => {
+          const id = btn.getAttribute('data-id');
+          const status = btn.getAttribute('data-act');
+          const token = localStorage.getItem('access_token') || '';
+          const r2 = await fetch(API + '/comments/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: JSON.stringify({ status }) });
+          if (r2.ok) loadComments();
+        }));
+      }
+      loadComments();
+    </script>
+  </body>
+  </html>
+
+

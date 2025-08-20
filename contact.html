@@ -53,7 +53,7 @@
             </div>
             <div class="card">
               <h3>Send a Message</h3>
-              <form action="https://formspree.io/f/mblkvgyy" method="POST" data-enhanced-form>
+              <form data-comments-form>
                 <div class="field">
                   <label for="name">Name</label>
                   <input type="text" id="name" name="name" required />
@@ -68,7 +68,7 @@
                 </div>
                 <input type="hidden" name="form_name" value="Digital Natives Contact" />
                 <button class="btn btn-primary" type="submit">Send</button>
-                <div class="hint">This form uses Formspree. Replace the action URL with your endpoint.</div>
+                <div class="hint">This form posts to your API at http://localhost:8787/comments. Set window.API_BASE to change.</div>
                 <div data-form-status aria-live="polite"></div>
               </form>
             </div>
